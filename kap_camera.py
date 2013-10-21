@@ -9,11 +9,12 @@ class Camera(object):
     transient_states = ['capturing']
 
     raspistill="raspistill"
+    warmup_ms=2000
     
     def __init__(self):
         """ this function is not synchronized.  
         """
-        self.state = "uninitialize"
+        self.state = "uninitialized"
         self.log_stack = []
         self.log_lock = threading.Lock()
         self.lock = threading.Lock()
@@ -31,6 +32,7 @@ class Camera(object):
                 return False
 
             self.state = 'ready'
+            print "Initialized"
             return True
 
     def async_initialize(self):
@@ -55,20 +57,23 @@ class Camera(object):
             
         with self.lock:
             if self.state != 'ready':
+                print "trying to preview, state is bad: %s"%self.state
                 return False
             self.state = "capturing"
             self._capture_preview(dest)
             self.state = "ready"
 
     def _capture_preview(self,dest):
+        print "Calling raspistill"
         retcode = subprocess.call([self.raspistill,
-                                   "-o",dest,"-e","jpg","-n",
+                                   "-o",dest,"-e","jpg","-n","-t","%i"%self.warmup_ms,
                                    "-w","320","-h","240"])
+        print "Retcode is ",retcode
         return retcode == 0
 
     def _capture_image(self,dest):
         retcode = subprocess.call([self.raspistill,
-                                   "-o",dest,"-e","jpg","-n",
+                                   "-o",dest,"-e","jpg","-n","-t","%i"%self.warmup_ms,
                                    "-w","1024","-h","768"])
         return retcode == 0
 

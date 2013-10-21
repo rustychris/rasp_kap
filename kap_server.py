@@ -94,7 +94,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 camera.async_initialize()
         elif camera.state == 'ready':
             if cmd == 'preview':
-                camera.update_preview(dest='html/current_preview.jpg')
+                camera.update_preview(dest='html/photos/preview.jpg')
             elif cmd == 'capture':
                 vals['full_image'] = self.next_image_filename()
                 camera.shoot_full(self.doc_root + vals['full_image'])

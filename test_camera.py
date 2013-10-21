@@ -2,4 +2,8 @@ import kap_camera
 
 c = kap_camera.Camera()
 
-c.capture_preview()
+print "Initializing"
+c.initialize()
+
+print "Calling update preview"
+c.update_preview()
