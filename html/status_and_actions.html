@@ -1,0 +1,24 @@
+    <div>
+      <em>${now_text}</em><br/>
+      <B>Camera state:</b> ${camera_state}
+      <ul>
+        % if camera_state == 'uninitialized':
+          <li> <A href="?cmd=initialize">initialize</a>
+        % elif camera_state == 'ready':
+          <li> <a href="?cmd=preview">shoot preview</a>
+          <li> <a href="?cmd=capture">shoot full</a>
+        % endif
+      </ul>
+    </div>
+    <div>
+      % for msg in log_stack[::-1]:
+       <li> [${"%.1fs"%(now - msg[1])}]: ${msg[0]}
+      % endfor
+    </div>
+  % if camera_transient:
+  <script type="text/javascript">
+    setTimeout( function() {
+       $('#status_and_actions').load('status_and_actions.html');
+     }, 1000 );
+  % endif
+  </script>

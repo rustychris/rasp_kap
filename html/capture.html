@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script type="text/javascript" src="jquery.js"></script>          
+    <script type="text/javascript">                                         
+      // we will add our javascript code here                                     
+    </script>                                       
+  </head>
+  <body>
+    <h3>Capture Images</h3>
+    <div id="status_and_actions">
+      <%include file='status_and_actions.html'/> 
+    </div>
+    <div>
+    <img src="current_preview.jpg">
+    </div>
+
+    % if full_image:
+      <div>
+        <img src="${full_image}" />
+      </div>
+    % endif
+      
+  </body>
+</html>
+   
