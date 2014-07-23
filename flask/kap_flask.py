@@ -2,6 +2,7 @@ import os
 import glob
 import flask
 import kap_camera
+import kap_servo
 import time
 from werkzeug.debug import DebuggedApplication
 
@@ -22,6 +23,8 @@ last_capture=None
 
 
 camera=kap_camera.camera_factory()
+servo=kap_servo.servo_factory()
+
 
 app = flask.Flask(__name__)
 
@@ -51,6 +54,8 @@ def cmd():
         camera.shoot_preview(next_filename())
     elif a=='capture':
         camera.shoot_full(next_filename())
+    elif a in ['left','right','up','down']:
+        servo.move_relative(a)
     elif a=='refresh':
         pass
     else:
@@ -62,7 +67,8 @@ def cmd():
 def status():
     params=dict(now_text=time.asctime(),
                 camera_state=camera.state,
-                status_transient=camera.transient())
+                status_transient=camera.transient(),
+                servo_state=servo.pos_text())
 
     last_capture=camera.last_capture
     if last_capture:

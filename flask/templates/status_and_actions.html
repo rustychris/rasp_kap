@@ -8,6 +8,11 @@
           <li> <a class="action" id="do_preview" onclick="action('preview')">shoot preview</a>
           <li> <a class="action" id="do_full" onclick="action('capture')">shoot full</a>
         {% endif %}
+          <li> <A class="action" id="do_left" onclick="action('left')">left</a>
+          <li> <A class="action" id="do_right" onclick="action('right')">right</a>
+          <li> <A class="action" id="do_up" onclick="action('up')">up</a>
+          <li> <A class="action" id="do_down" onclick="action('down')">down</a>
+
           <li> <A class="action" id="do_refresh" onclick="action('refresh')">refresh</a>
       </ul>
     </div>
@@ -29,3 +34,4 @@
 <div>
 Last capture: {{last_capture}}
 </div>
+<div>{{servo_state}}</div>
