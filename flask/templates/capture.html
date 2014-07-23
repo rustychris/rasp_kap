@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <script type="text/javascript" src="{{ url_for('static',filename='jquery.js') }}"></script>          
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}"/>
+    <script type="text/javascript">                                         
+      // javascript code 
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+      function action(cmd) {
+        $('#status_and_actions').load($SCRIPT_ROOT + '/capture/action?cmd=' + cmd); 
+        return false;
+      };
+
+      function update_main_image(img) {
+        $('#main_img').attr('src',img);
+      }
+    </script>                                       
+  </head>
+  <body>
+    <h3>Capture Images</h3>
+    <span id="dummmy">dummy</span>
+    <div id="status_and_actions">
+      {%include 'status_and_actions.html' %}
+    </div>
+
+    <div>
+       <img id="main_img" src="{{url_for('static',filename='empty.jpg')}}" />
+      </div>      
+  </body>
+</html>
+   

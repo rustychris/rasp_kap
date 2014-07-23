@@ -1,0 +1,17 @@
+Asynchronous actions:
+
+AJAX request comes from client.  Initiates action on server.
+
+Client has logic to repeatedly query status, where the status reply
+include what action is ongoing, or the last action and a final status
+on its failure or completion.
+
+The failure modes are that the client may not get the request into the
+server, in which case it will eventually get a status response indicating
+that nothing was done.
+
+Or the server may not be able to get a reply back - in which case the
+client will spin for a while, and eventually when a response comes back
+it will be apparent that the original request either succeeded or
+failed.
+

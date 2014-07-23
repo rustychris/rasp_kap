@@ -1,0 +1,31 @@
+    <div>
+      <em>{{now_text}}</em><br/>
+      <B>Camera state:</b> <span id="camera_state">{{camera_state}}</span>
+      <ul>
+        {% if camera_state == 'uninitialized' %}
+          <li> <A class="action" id="do_initialize" onclick="action('initialize');">initialize</a>
+        {% elif camera_state == 'ready' %}
+          <li> <a class="action" id="do_preview" onclick="action('preview')">shoot preview</a>
+          <li> <a class="action" id="do_full" onclick="action('capture')">shoot full</a>
+        {% endif %}
+          <li> <A class="action" id="do_refresh" onclick="action('refresh')">refresh</a>
+      </ul>
+    </div>
+  {% if status_transient %}
+  <script type="text/javascript">
+    setTimeout( function() {
+       $('#status_and_actions').load('status_and_actions');
+     }, 1000 );
+  </script>
+  {% else %}
+   No pending action
+  {% endif %}
+
+{% if last_capture %}
+<script type="text/javascript">
+ update_main_image("{{url_for('static',filename=last_capture)}}");
+</script>
+{% endif %}
+<div>
+Last capture: {{last_capture}}
+</div>
